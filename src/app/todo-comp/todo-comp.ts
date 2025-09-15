@@ -17,6 +17,7 @@ export interface Task{
 export class TodoComp {
   taskList: Task [] = [];
   newTask:string = ""
+  searchText:string = ""
 
   addTask():void{
     if(this.newTask.trim() !== ""){
@@ -32,12 +33,16 @@ export class TodoComp {
 
   completedTask(index:number):void{
     this.taskList[index].completed = !this.taskList[index].completed 
-    
   }
 
   deleteTask(id:number):void{
     this.taskList = this.taskList.filter(item => item.id !== id)
-    console.log(this.taskList);
-    
+  }
+
+
+  get filteredTasks() {
+    return this.taskList.filter(task =>
+      task.title.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 }
