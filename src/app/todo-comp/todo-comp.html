@@ -1,3 +1,4 @@
+<!--
 
 <div>
     <input [(ngModel)]="newTask" 
@@ -32,4 +33,84 @@
         <button (click)="deleteTask(task.id)">Remove</button>
     </li>
 </ul>
+-->
 
+
+<section class="vh-100" style="background-color: #e2d5de;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-8">
+  
+          <div class="card shadow-sm" style="border-radius: 15px;">
+            <div class="card-body p-5">
+  
+              <h3 class="mb-4 text-center">Todo List</h3>
+  
+              <form class="row g-2 mb-4" (submit)="addTask()">
+                <div class="col-9">
+                  <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="newTask"
+                    name="newTask"
+                    placeholder="Enter new task"
+                    (keyup.enter)="addTask()"
+                    required
+                  />
+                </div>
+                <div class="col-3 d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    Add
+                  </button>
+                </div>
+              </form>
+  
+              <div class="row g-2 mb-4">
+                <div class="col-md-8">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search tasks..."
+                    [(ngModel)]="searchText"
+                    name="searchText"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <select [(ngModel)]="statusFilter" name="statusFilter" class="form-select">
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="active">Active</option>
+                  </select>
+                </div>
+              </div>
+  
+              <ul class="list-group">
+                <li
+                  *ngFor="let task of filteredTasks; let i = index"
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  <div class="d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [checked]="task.completed"
+                      (change)="completedTask(i)"
+                    />
+                    <span [class.text-decoration-line-through]="task.completed">
+                      {{ task.title }}
+                    </span>
+                  </div>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id)">
+                    <i class="bi bi-x-lg"> delete</i>
+                  </button>
+                </li>
+              </ul>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
