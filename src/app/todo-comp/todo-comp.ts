@@ -18,6 +18,7 @@ export class TodoComp {
   taskList: Task [] = [];
   newTask:string = ""
   searchText:string = ""
+  statusFilter:string= "all"
 
   addTask():void{
     if(this.newTask.trim() !== ""){
@@ -41,8 +42,16 @@ export class TodoComp {
 
 
   get filteredTasks() {
-    return this.taskList.filter(task =>
-      task.title.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+    return this.taskList.filter(task => {
+        const matchesSearch = task.title.toLowerCase().includes(this.searchText.toLowerCase());
+        const matchesStatus =
+          this.statusFilter === 'all' ||
+          (this.statusFilter === 'completed' && task.completed) ||
+          (this.statusFilter === 'active' && !task.completed);
+  
+        return matchesSearch && matchesStatus;
+      });
   }
+
+
 }
