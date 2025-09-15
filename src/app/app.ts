@@ -4,7 +4,7 @@ import { TodoComp } from './todo-comp/todo-comp';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TodoComp],
+  imports: [TodoComp],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
