@@ -1,4 +1,153 @@
-<!--
+
+<!-- Hele app-området, med full høyde og bakgrunnsfarge -->
+<section class="min-vh-100" style="background-color: #e2d5de;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-8">
+  
+           <!-- Kort -->
+          <div class="card shadow-sm" style="border-radius: 15px;">
+            <div class="card-body p-5">
+  
+              <!-- Title -->
+              <h3 class="mb-4 text-center">Todo List</h3>
+  
+              <!-- Form for ny oppgave -->
+              <form class="row g-2 mb-4" (submit)="addTask()">
+
+                <!-- Tekstfelt for oppgaven -->
+                <div class="col-9">
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
+                      [(ngModel)]="newTask"
+                      name="newTask"
+                      placeholder="Enter new task..."
+                      (keyup.enter)="addTask()"
+                      required
+                    />
+                    <!-- X-knapp for å tømme input -->
+                    <button
+                        *ngIf="newTask"
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                        (click)="clearAdd()"
+                      >
+                        ✖
+                      </button>
+                  </div>
+                </div>
+
+                <!-- Velge prioritet -->
+                <div class="col-md-3">
+                  <select
+                    class="form-select form-select-lg"
+                    [(ngModel)]="newPriority"
+                    name="newPriority"
+                    required
+                  >
+                    <option value="" disabled selected>Select priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+
+                <!-- Add knapp -->
+                <div class="col-md-3 d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    Add
+                  </button>
+                </div>
+              </form>
+  
+              <!-- Søkefelt og statusfilter -->
+              <div class="row g-2 mb-4">
+                <div class="col-md-8">
+                  <div class="position-relative">
+
+                    <!-- Søkefelt -->
+                    <input
+                      type="text"
+                      class="form-control pe-5"
+                      placeholder="Search tasks..."
+                      [(ngModel)]="searchText"
+                      name="searchText"
+                    />
+                    <!-- X-knapp for å tømme søkefelt -->
+                    <button
+                      *ngIf="searchText"
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                      (click)="clearSearch()"
+                    >
+                      ✖
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Dropdown for å filtrere om fulført -->
+                <div class="col-md-4">
+                  <select [(ngModel)]="statusFilter" name="statusFilter" class="form-select">
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="active">Active</option>
+                  </select>
+                </div>
+              </div>
+  
+               <!-- Liste over oppgaver -->
+              <ul class="list-group">
+                <li
+                  *ngFor="let task of filteredTasks; let i = index"
+                  class="list-group-item d-flex justify-content-between align-items-center bg-light mb-2"
+                >
+
+                 <!-- Venstre del: checkbox + tittel -->
+                  <div class="d-flex align-items-center">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      [checked]="task.completed"
+                      (change)="completedTask(i)"
+                    />
+                    <span [class.text-decoration-line-through]="task.completed" class="me-3">
+                      {{ task.title }}
+                    </span>
+                  </div>
+
+                  <!-- Høyre del: prioritet + delete-knapp -->
+                    <div class="d-flex align-items-center">
+                    <span
+                      class="badge me-2"
+                      [ngClass]="{
+                        'bg-danger': task.priority === 'high',
+                        'bg-warning': task.priority === 'medium',
+                        'bg-success': task.priority === 'low'
+                      }"
+                    >
+                      {{ task.priority | titlecase }}
+                    </span>
+                  
+                    <!-- Delete-knapp -->
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id)">
+                    <i class="bi bi-x-lg"> Delete</i>
+                  </button>
+                </div>
+                </li>
+              </ul>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+<!-- kode før bootstrap
 
 <div>
     <input [(ngModel)]="newTask" 
@@ -34,130 +183,3 @@
     </li>
 </ul>
 -->
-
-
-<section class="min-vh-100" style="background-color: #e2d5de;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-xl-8">
-  
-          <div class="card shadow-sm" style="border-radius: 15px;">
-            <div class="card-body p-5">
-  
-              <h3 class="mb-4 text-center">Todo List</h3>
-  
-              <form class="row g-2 mb-4" (submit)="addTask()">
-                <div class="col-9">
-                  <div class="position-relative">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      [(ngModel)]="newTask"
-                      name="newTask"
-                      placeholder="Enter new task..."
-                      (keyup.enter)="addTask()"
-                      required
-                    />
-                    <button
-                        *ngIf="newTask"
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
-                        (click)="clearAdd()"
-                      >
-                        ✖
-                      </button>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <select
-                    class="form-select form-select-lg"
-                    [(ngModel)]="newPriority"
-                    name="newPriority"
-                    required
-                  >
-                    <option value="" disabled selected>Select priority</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                  </select>
-                </div>
-                <div class="col-md-3 d-grid">
-                  <button type="submit" class="btn btn-primary btn-lg">
-                    Add
-                  </button>
-                </div>
-              </form>
-  
-              <div class="row g-2 mb-4">
-                <div class="col-md-8">
-                  <div class="position-relative">
-                    <input
-                      type="text"
-                      class="form-control pe-5"
-                      placeholder="Search tasks..."
-                      [(ngModel)]="searchText"
-                      name="searchText"
-                      
-                    />
-                    <button
-                      *ngIf="searchText"
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
-                      (click)="clearSearch()"
-                    >
-                      ✖
-                    </button>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <select [(ngModel)]="statusFilter" name="statusFilter" class="form-select">
-                    <option value="all">All</option>
-                    <option value="completed">Completed</option>
-                    <option value="active">Active</option>
-                  </select>
-                </div>
-              </div>
-  
-              <ul class="list-group">
-                <li
-                  *ngFor="let task of filteredTasks; let i = index"
-                  class="list-group-item d-flex justify-content-between align-items-center bg-light mb-2"
-                >
-                  <div class="d-flex align-items-center">
-                    <input
-                      class="form-check-input me-2"
-                      type="checkbox"
-                      [checked]="task.completed"
-                      (change)="completedTask(i)"
-                    />
-                    <span [class.text-decoration-line-through]="task.completed" class="me-3">
-                      {{ task.title }}
-                    </span>
-                  </div>
-                    <div class="d-flex align-items-center">
-                    <span
-                      class="badge me-2"
-                      [ngClass]="{
-                        'bg-danger': task.priority === 'high',
-                        'bg-warning text-dark': task.priority === 'medium',
-                        'bg-success': task.priority === 'low'
-                      }"
-                    >
-                      {{ task.priority | titlecase }}
-                    </span>
-                  
-                  <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id)">
-                    <i class="bi bi-x-lg"> Delete</i>
-                  </button>
-                </div>
-                </li>
-              </ul>
-  
-            </div>
-          </div>
-  
-        </div>
-      </div>
-    </div>
-  </section>
-  
