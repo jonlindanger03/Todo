@@ -6,6 +6,7 @@ export interface Task{
   id:number;
   title:string;
   completed:boolean;
+  priority: 'high' | 'medium' | 'low';
 }
 
 @Component({
@@ -19,13 +20,15 @@ export class TodoComp {
   newTask:string = ""
   searchText:string = ""
   statusFilter:string= "all"
+  newPriority: 'high' | 'medium' | 'low' = 'medium';
 
   addTask():void{
     if(this.newTask.trim() !== ""){
       const newTaskItem : Task = {
         id : Date.now(),
         title : this.newTask,
-        completed : false
+        completed : false,
+        priority: this.newPriority
       }
       this.taskList.push(newTaskItem)
       this.newTask = ""

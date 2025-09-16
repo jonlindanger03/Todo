@@ -54,7 +54,7 @@
                       class="form-control form-control-lg"
                       [(ngModel)]="newTask"
                       name="newTask"
-                      placeholder="Enter new task"
+                      placeholder="Enter new task..."
                       (keyup.enter)="addTask()"
                       required
                     />
@@ -68,7 +68,20 @@
                       </button>
                   </div>
                 </div>
-                <div class="col-3 d-grid">
+                <div class="col-md-3">
+                  <select
+                    class="form-select form-select-lg"
+                    [(ngModel)]="newPriority"
+                    name="newPriority"
+                    required
+                  >
+                    <option value="" disabled selected>Select priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+                <div class="col-md-3 d-grid">
                   <button type="submit" class="btn btn-primary btn-lg">
                     Add
                   </button>
@@ -117,13 +130,26 @@
                       [checked]="task.completed"
                       (change)="completedTask(i)"
                     />
-                    <span [class.text-decoration-line-through]="task.completed">
+                    <span [class.text-decoration-line-through]="task.completed" class="me-3">
                       {{ task.title }}
                     </span>
                   </div>
+                    <div class="d-flex align-items-center">
+                    <span
+                      class="badge me-2"
+                      [ngClass]="{
+                        'bg-danger': task.priority === 'high',
+                        'bg-warning text-dark': task.priority === 'medium',
+                        'bg-success': task.priority === 'low'
+                      }"
+                    >
+                      {{ task.priority | titlecase }}
+                    </span>
+                  
                   <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id)">
                     <i class="bi bi-x-lg"> Delete</i>
                   </button>
+                </div>
                 </li>
               </ul>
   
