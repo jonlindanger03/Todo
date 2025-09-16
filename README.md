@@ -1,59 +1,55 @@
-# TodoApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+# Todo App (Angular + Bootstrap)
 
-## Development server
+Et enkelt Todo-prosjekt bygget i Angular med styling fra **Bootstrap**.  
+Appen lar deg legge til, søke, filtrere, slette og fullføre oppgaver, samt angi prioritet (Høy, Medium, Lav).
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Teknologistack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Frontend: [Angular](https://angular.io/) (TypeScript, HTML, CSS)
+- Styling: [Bootstrap](https://getbootstrap.com/)
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Hvordan kjøre lokalt
+    ```bash
+    git clone https://github.com/<ditt-brukernavn>/todo-app.git
+    cd todo-app
+    npm install (npm install bootstrap)
+    ng serve
+    ```
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Antakelser og avgrensninger
 
-```bash
-ng generate --help
-```
+- Lagring skjer kun i minnet (oppgaver forsvinner ved refresh).
 
-## Building
+- Ingen backend eller database er koblet til ennå.
 
-To build the project run:
+- Enkle valideringer på input.
 
-```bash
-ng build
-```
+- Prosjektet er ment som en demo, ikke produksjonsklar kode.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Brukeren kan kun legge til en tittel, ikke frist eller andre metadata.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Neste steg
+- Legge til en sorterings filter for prioriteter.
 
-```bash
-ng test
-```
+- koble det til en backend for lagring av data.
 
-## Running end-to-end tests
+- Få en Autentisering/innlogging.
 
-For end-to-end (e2e) testing, run:
+- Legge til en merker alt mulighet.
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Hva som er generert
 
-## Additional Resources
+- Alt bootstrap er hentet fra en mal på nettet og så brukt AI for å implementere det i prosjektet.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- For å få filteret til å fungere ble det brukt AI.
