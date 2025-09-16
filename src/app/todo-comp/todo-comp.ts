@@ -32,6 +32,10 @@ export class TodoComp {
     }
   }
 
+  clearAdd(){
+    this.newTask = "";
+  }
+
   completedTask(index:number):void{
     this.taskList[index].completed = !this.taskList[index].completed 
   }
@@ -40,18 +44,21 @@ export class TodoComp {
     this.taskList = this.taskList.filter(item => item.id !== id)
   }
 
+    get filteredTasks() {
+      return this.taskList.filter(task => {
+          const matchesSearch = task.title.toLowerCase().includes(this.searchText.toLowerCase());
+          const matchesStatus =
+            this.statusFilter === 'all' ||
+            (this.statusFilter === 'completed' && task.completed) ||
+            (this.statusFilter === 'active' && !task.completed);
+    
+          return matchesSearch && matchesStatus;
+        });
+    }
 
-  get filteredTasks() {
-    return this.taskList.filter(task => {
-        const matchesSearch = task.title.toLowerCase().includes(this.searchText.toLowerCase());
-        const matchesStatus =
-          this.statusFilter === 'all' ||
-          (this.statusFilter === 'completed' && task.completed) ||
-          (this.statusFilter === 'active' && !task.completed);
-  
-        return matchesSearch && matchesStatus;
-      });
-  }
-
+   
+    clearSearch() {
+      this.searchText = '';
+    }
 
 }

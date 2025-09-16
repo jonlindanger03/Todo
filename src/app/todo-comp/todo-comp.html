@@ -48,15 +48,25 @@
   
               <form class="row g-2 mb-4" (submit)="addTask()">
                 <div class="col-9">
-                  <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    [(ngModel)]="newTask"
-                    name="newTask"
-                    placeholder="Enter new task"
-                    (keyup.enter)="addTask()"
-                    required
-                  />
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
+                      [(ngModel)]="newTask"
+                      name="newTask"
+                      placeholder="Enter new task"
+                      (keyup.enter)="addTask()"
+                      required
+                    />
+                    <button
+                        *ngIf="newTask"
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                        (click)="clearAdd()"
+                      >
+                        ✖
+                      </button>
+                  </div>
                 </div>
                 <div class="col-3 d-grid">
                   <button type="submit" class="btn btn-primary btn-lg">
@@ -67,13 +77,24 @@
   
               <div class="row g-2 mb-4">
                 <div class="col-md-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search tasks..."
-                    [(ngModel)]="searchText"
-                    name="searchText"
-                  />
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control pe-5"
+                      placeholder="Search tasks..."
+                      [(ngModel)]="searchText"
+                      name="searchText"
+                      
+                    />
+                    <button
+                      *ngIf="searchText"
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                      (click)="clearSearch()"
+                    >
+                      ✖
+                    </button>
+                  </div>
                 </div>
                 <div class="col-md-4">
                   <select [(ngModel)]="statusFilter" name="statusFilter" class="form-select">
